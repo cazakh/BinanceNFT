@@ -19,5 +19,5 @@ At first you must open `cfg.py` file with ant text editor you have on your PC. T
 ### Starting up
 Open `MBot3.py` file with IDLE, then atart it and follow all the instructions which are given by bot.
 
-#You are experiencing problems?
+# You are experiencing problems?
 Just contact me on telegram by clicking [this button](https://t.me/necazakh)
