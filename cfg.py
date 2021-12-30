@@ -1,12 +1,13 @@
 from json import dumps
 user_token = 'user token here' # защита будущая
-
+f=open("conf.cazakhBot", "r")
+contents = list(map(int, f.read().strip().split(' ')))
+f.close()
 proxy = None # прокси
-requests_payload = {"number":1,"productId":170778093912111104} # для покупки боксов
-product_id = 18394993  # для аукциона
-saleTime = 1640689198 # время сейла в unix
-requestsNumber = 1000 # количество запросов
-
+requests_payload = {"number":contents[0],"productId":contents[1]} # для покупки боксов
+product_id = contents[2]  # для аукциона
+saleTime = contents[3] # время сейла в unix
+requestsNumber = contents[4] # количество запросов
 def get_values():
     return {
         'user_token': user_token,

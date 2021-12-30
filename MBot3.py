@@ -1,12 +1,32 @@
+from keyauth import api
 import asyncio
 import time
 from selenium.webdriver.common.action_chains import ActionChains
 from seleniumwire import webdriver
 import json
 import aiohttp
+import os
+import sys
+import os.path
+import platform
+from datetime import datetime
 
 from cfg import *
-import main
+keyauthapp = api("BotPython", "u6NQ037Tro", "3730042d70cce8b2fb0e8edb6d1e80f3f46c091c9c60b49dcc6a5bc4fbc5f200","1.0")
+
+print("Initializing")
+keyauthapp.init()
+
+key = input('Enter your license: ')
+keyauthapp.license(key)
+
+print("\nUser data: ") 
+print("Username: " + keyauthapp.user_data.username)
+print("IP address: " + keyauthapp.user_data.ip)
+print("Hardware-Id: " + keyauthapp.user_data.hwid)
+print("Created at: " + datetime.utcfromtimestamp(int(keyauthapp.user_data.createdate)).strftime('%Y-%m-%d %H:%M:%S'))
+print("Last login at: " + datetime.utcfromtimestamp(int(keyauthapp.user_data.lastlogin)).strftime('%Y-%m-%d %H:%M:%S'))
+print("Expires at: " + datetime.utcfromtimestamp(int(keyauthapp.user_data.expires)).strftime('%Y-%m-%d %H:%M:%S'))
 
 results = []
 
@@ -102,25 +122,6 @@ def startSsc(headers):
             asyncio.set_event_loop(loop)
             return asyncio.get_event_loop().run_until_complete(get_symbols(headers))
 
-def sendToServ(headers):
-    if not headers:
-        print('ERROR: no headers')
-        raise SystemExit(1)
-    try:
-        asyncio.run(main.send_buy_request(
-            headers['x-nft-checkbot-token'],
-            headers['x-nft-checkbot-sitekey'],
-            headers['x-trace-id'],
-            headers['x-ui-request-trace'],
-            headers['cookie'],
-            headers['csrftoken'],
-            headers['device-info'],
-            headers['user-agent'],
-            time.time() + 5
-        ))
-    except:
-        print('Failed to send info to the server')
-
 
 while True:
     ts = time.time()
@@ -130,7 +131,7 @@ while True:
         break
 
 headers = clickConfirm()
-sendToServ(headers)
+
 
 while True:
     ts = time.time()
